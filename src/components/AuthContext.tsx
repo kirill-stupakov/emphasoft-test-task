@@ -16,6 +16,8 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   const [isSignUpShown, setIsSignUpShown] = useState(false);
   const [isLoginShown, setIsLoginShown] = useState(false);
 
+  setUser({ username: "UserName" });
+
   const outValue = {
     user,
     isSignUpShown,
