@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { user } from "../types";
 
 type AuthContextType = {
@@ -16,7 +16,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   const [isSignUpShown, setIsSignUpShown] = useState(false);
   const [isLoginShown, setIsLoginShown] = useState(false);
 
-  setUser({ username: "UserName" });
+  useEffect(() => setUser({ username: "UserName" }), []);
 
   const outValue = {
     user,
