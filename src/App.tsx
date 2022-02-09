@@ -24,7 +24,7 @@ function App() {
         {token ? (
           <UserList />
         ) : (
-          <h1>
+          <h1 className="text-center">
             Please,{" "}
             <Button variant="link" className="p-0 h1 fs-1" onClick={showLogin}>
               log in
