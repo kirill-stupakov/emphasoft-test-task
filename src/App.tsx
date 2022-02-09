@@ -5,7 +5,7 @@ import "./App.scss";
 import { AuthContext } from "./components/AuthContext";
 import TopBar from "./components/TopBar";
 import UserList from "./components/UserList";
-import LogInForm from "./components/LogInForm";
+import FormWrapper from "./components/FormWrapper";
 
 function App() {
   const { isLoginShown, setIsLoginShown, token } = useContext(AuthContext)!;
@@ -16,7 +16,7 @@ function App() {
     <div className="App vh-100 d-flex flex-column">
       <TopBar />
 
-      {isLoginShown && <LogInForm />}
+      {isLoginShown && <FormWrapper />}
       <Container
         fluid
         className="flex-grow-1 d-flex justify-content-center align-items-center"
