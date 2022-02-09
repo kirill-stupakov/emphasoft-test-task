@@ -19,8 +19,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     cookie.parse(document.cookie).username
   );
 
-  console.log(username, token);
-
   useEffect(() => {
     document.cookie = cookie.serialize("token", token);
   }, [token]);
