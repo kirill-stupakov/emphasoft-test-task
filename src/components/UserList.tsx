@@ -36,7 +36,7 @@ const UserList = () => {
     .sort((a, b) => (isSortAscending ? a.id - b.id : b.id - a.id));
 
   return (
-    <Container className="mt-5">
+    <Container className="my-4">
       <h1 className="text-center mb-4">User List</h1>
       <InputGroup className="mb-2">
         <FormControl

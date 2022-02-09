@@ -1,3 +1,8 @@
 .form-bg {
   z-index: 100;
 }
+
+.btn-link:focus {
+  outline: none;
+  box-shadow: none;
+}

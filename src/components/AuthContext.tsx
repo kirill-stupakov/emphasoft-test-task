@@ -6,8 +6,6 @@ type AuthContextType = {
   setToken: React.Dispatch<React.SetStateAction<string>>;
   username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
-  isSignUpShown: boolean;
-  setIsSignUpShown: React.Dispatch<React.SetStateAction<boolean>>;
   isLoginShown: boolean;
   setIsLoginShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -15,7 +13,6 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthContextProvider: React.FC = ({ children }) => {
-  const [isSignUpShown, setIsSignUpShown] = useState(false);
   const [isLoginShown, setIsLoginShown] = useState(false);
   const [token, setToken] = useState(cookie.parse(document.cookie).token);
   const [username, setUsername] = useState(
@@ -37,8 +34,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     setToken,
     username,
     setUsername,
-    isSignUpShown,
-    setIsSignUpShown,
     isLoginShown,
     setIsLoginShown,
   };

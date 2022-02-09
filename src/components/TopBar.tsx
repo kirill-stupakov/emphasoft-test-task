@@ -3,7 +3,7 @@ import { Button, Container, Navbar } from "react-bootstrap";
 import { AuthContext } from "./AuthContext";
 
 const TopBar = () => {
-  const { username, setUsername, setToken, setIsLoginShown, setIsSignUpShown } =
+  const { username, setUsername, setToken, setIsLoginShown } =
     useContext(AuthContext)!;
 
   const logOut = () => {
@@ -13,10 +13,6 @@ const TopBar = () => {
 
   const showLogin = () => {
     setIsLoginShown(true);
-  };
-
-  const showSignup = () => {
-    setIsSignUpShown(true);
   };
 
   return (
@@ -35,18 +31,13 @@ const TopBar = () => {
               </Button>
             </>
           ) : (
-            <>
-              <Button
-                variant="outline-primary"
-                className="mx-1"
-                onClick={showLogin}
-              >
-                Log In
-              </Button>
-              <Button className="mx-1" onClick={showSignup}>
-                Sign Up
-              </Button>
-            </>
+            <Button
+              variant="outline-primary"
+              className="mx-1"
+              onClick={showLogin}
+            >
+              Log In
+            </Button>
           )}
         </Navbar.Collapse>
       </Container>
