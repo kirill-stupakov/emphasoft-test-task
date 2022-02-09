@@ -1,19 +1,18 @@
-import React from "react";
-import { Button, Container, Form } from "react-bootstrap";
-import { useFormik } from "formik";
+import React, { useContext, useState } from "react";
 import * as yup from "yup";
-import axios from "axios";
+import { useFormik } from "formik";
+import { Button, Container, Form } from "react-bootstrap";
 import { apiUrl } from "../constants";
+import axios from "axios";
+import { AuthContext } from "./AuthContext";
 
-const signupSchema = yup.object().shape({
+const loginSchema = yup.object().shape({
   username: yup
     .string()
     .min(1, "Too short!")
     .max(150, "Too long!")
     .matches(/^[\w.@+-]+$/, "Contains forbidden symbols")
     .required("Required!"),
-  firstName: yup.string().max(30, "Too long!"),
-  lastName: yup.string().max(150, "Too long!"),
   password: yup
     .string()
     .min(1, "Too short!")
@@ -22,29 +21,31 @@ const signupSchema = yup.object().shape({
     .required("Required!"),
 });
 
-const SignUpForm = () => {
-  const initialValues = {
-    username: "",
-    firstName: "",
-    lastName: "",
-    password: "",
-  };
+const LogInForm = () => {
+  const { setUsername, setToken, setIsLoginShown } = useContext(AuthContext)!;
+  const [error, setError] = useState(false);
+
+  const initialValues = { username: "", password: "" };
 
   const handleSubmit = (values: typeof initialValues) =>
     axios
-      .post(apiUrl + "/api/v1/users/", {
+      .post(apiUrl + "/api-token-auth/", {
         username: values.username,
         password: values.password,
-        first_name: values.firstName,
-        last_name: values.lastName,
       })
-      .then(console.log)
-      .catch(console.error);
+      .then((res) => {
+        setIsLoginShown(false);
+        setToken(res.data.token);
+        setUsername(values.username);
+      })
+      .catch(() => {
+        setError(true);
+      });
 
   const formik = useFormik({
     initialValues,
     onSubmit: handleSubmit,
-    validationSchema: signupSchema,
+    validationSchema: loginSchema,
   });
 
   return (
@@ -53,11 +54,11 @@ const SignUpForm = () => {
       className="form-bg vh-100 position-absolute bg-black bg-opacity-25 d-flex justify-content-center align-items-center"
     >
       <Container className="shadow p-5 w-auto rounded-3 bg-white">
-        <h1 className="text-center fw-bold mb-4">Sign Up</h1>
+        <h1 className="text-center fw-bold mb-4">Log In</h1>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>
-              username <span className="text-primary">*</span>
+              Username <span className="text-primary">*</span>
             </Form.Label>
             <Form.Control
               type="text"
@@ -70,36 +71,6 @@ const SignUpForm = () => {
             />
             <Form.Control.Feedback type="invalid">
               {formik.errors.username}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>First name</Form.Label>
-            <Form.Control
-              type="text"
-              name="firstName"
-              placeholder="John"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.firstName}
-              isInvalid={!!formik.errors.firstName && formik.touched.firstName}
-            />
-            <Form.Control.Feedback type="invalid">
-              {formik.errors.firstName}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Last name</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastName"
-              placeholder="Doe"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.lastName}
-              isInvalid={!!formik.errors.lastName && formik.touched.lastName}
-            />
-            <Form.Control.Feedback type="invalid">
-              {formik.errors.lastName}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
@@ -120,13 +91,22 @@ const SignUpForm = () => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Button type="submit" variant="outline-primary w-100">
-            Sign Up
-          </Button>
+          <Form.Group className="mb-3">
+            <Button
+              type="submit"
+              variant="outline-primary w-100"
+              disabled={formik.isSubmitting}
+            >
+              Log In
+            </Button>
+            {error && (
+              <Form.Text className="text-danger">Invalid login data!</Form.Text>
+            )}
+          </Form.Group>
         </Form>
       </Container>
     </Container>
   );
 };
 
-export default SignUpForm;
+export default LogInForm;

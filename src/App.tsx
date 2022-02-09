@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./App.scss";
+
+import { AuthContext } from "./components/AuthContext";
 import TopBar from "./components/TopBar";
-import { AuthContextProvider } from "./components/AuthContext";
+import UserList from "./components/UserList";
+import LogInForm from "./components/LogInForm";
+import SignUpForm from "./components/SignUpForm";
 
 function App() {
+  const { isLoginShown, isSignUpShown } = useContext(AuthContext)!;
+
   return (
-    <AuthContextProvider>
-      <div className="App vh-100 d-flex flex-column">
-        <TopBar />
-      </div>
-    </AuthContextProvider>
+    <div className="App vh-100 d-flex flex-column">
+      <TopBar />
+      {isLoginShown && <LogInForm />}
+      {isSignUpShown && <SignUpForm />}
+      <UserList />
+    </div>
   );
 }
 
