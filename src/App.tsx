@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import "./App.scss";
+import { Button, Container } from "react-bootstrap";
 
+import "./App.scss";
 import { AuthContext } from "./components/AuthContext";
 import TopBar from "./components/TopBar";
 import UserList from "./components/UserList";
 import LogInForm from "./components/LogInForm";
-import { Button, Container } from "react-bootstrap";
 
 function App() {
   const { isLoginShown, setIsLoginShown, token } = useContext(AuthContext)!;
