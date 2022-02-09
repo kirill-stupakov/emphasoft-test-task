@@ -14,9 +14,9 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthContextProvider: React.FC = ({ children }) => {
   const [isLoginShown, setIsLoginShown] = useState(false);
-  const [token, setToken] = useState(cookie.parse(document.cookie).token);
+  const [token, setToken] = useState(cookie.parse(document.cookie).token || "");
   const [username, setUsername] = useState(
-    cookie.parse(document.cookie).username
+    cookie.parse(document.cookie).username || ""
   );
 
   useEffect(() => {
